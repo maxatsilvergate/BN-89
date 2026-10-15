@@ -46,7 +46,9 @@ The main platform has a solid 576-unit center and grey 72-unit one-way sections 
 
 Paper, Pocket, Amber, Ice, Berry, Sunset and Hell can be selected in the keyboard menu, with inversion available for every palette. Sunset pairs peach with plum silhouettes; Hell uses hot vermilion with deep red silhouettes. Existing palette selections retain their indices.
 
-## Your own music
+## Music
+
+The default looping track is Never Gonna Give You Up (8 Bit Remix Cover Version) [Tribute to Rick Astley] by 8 Bit Universe, supplied by the project owner. It is bundled with the hosted game and embedded in the standalone download. Playback starts after a keyboard interaction.
 
 Select CHOOSE MUSIC on the title or pause screen, press Enter/Space, and choose a browser-supported audio file such as MP3 or WAV. The file loops through a dedicated music gain channel. MUSIC and SFX have separate toggles and 0-100 volume settings, adjusted in steps of 10 using left/right (A/D). Defaults are Music 25 and SFX 80. Both share a compressor; music briefly ducks during effects so they remain audible together. Volumes persist locally. The chosen file is saved with IndexedDB on this device/browser when storage is available; otherwise it lasts for this session. It is not uploaded to the hosted site or shared with other visitors. A keyboard interaction unlocks playback after reloading.
 

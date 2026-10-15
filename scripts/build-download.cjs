@@ -6,11 +6,11 @@ const output=path.resolve(process.argv[2]||path.join(root,'release'));
 let html=fs.readFileSync(path.join(dist,'index.html'),'utf8');
 html=html.replace(/<link\s+rel="stylesheet"\s+href="([^"]+)"\s*\/?\s*>/g,(_,file)=>'<style>'+readLocal(file).replace(/<\/style/gi,'<\\/style')+'</style>');
 html=html.replace(/<script\s+src="([^"]+)"\s*>\s*<\/script>/g,(_,file)=>'<script>'+readLocal(file).replace(/<\/script/gi,'<\\/script')+'</script>');
-// When the bundled track is added, embed referenced local assets in the HTML.
+// Embed referenced local audio assets in the standalone HTML.
 const assets=path.join(dist,'assets');
 if(fs.existsSync(assets))for(const name of fs.readdirSync(assets)){const rel='assets/'+name;if(!html.includes(rel))continue;const file=path.join(assets,name);if(!fs.statSync(file).isFile())continue;const types={'.mp3':'audio/mpeg','.wav':'audio/wav','.ogg':'audio/ogg','.m4a':'audio/mp4','.aac':'audio/aac','.flac':'audio/flac','.webm':'audio/webm'};const mime=types[path.extname(name).toLowerCase()];if(mime)html=html.split(rel).join('data:'+mime+';base64,'+fs.readFileSync(file).toString('base64'));}
 if(/<(?:script|link)\b[^>]*(?:src|href)="(?!data:)[^"]+"/i.test(html))throw Error('Download still references an external script or stylesheet.');
-const readme='BN-89\r\n\r\nExtract this ZIP, then double-click BN-89.html.\r\nNo installation or internet connection required. Use a desktop browser.\r\n\r\nTwo players share one keyboard. Player two needs a number pad.\r\nBN: WASD, B attack, N shield.\r\n89: Arrow keys, numpad 8 attack, numpad 9 shield.\r\nNavigate menus with WASD/arrows; Enter or Space selects. Escape pauses.\r\nMusic and SFX have independent controls in the menu.\r\n\r\nSource: https://github.com/maxatsilvergate/BN-89\r\n';
+const readme='BN-89\r\n\r\nExtract this ZIP, then double-click BN-89.html.\r\nNo installation or internet connection required. Use a desktop browser.\r\n\r\nTwo players share one keyboard. Player two needs a number pad.\r\nBN: WASD, B attack, N shield.\r\n89: Arrow keys, numpad 8 attack, numpad 9 shield.\r\nNavigate menus with WASD/arrows; Enter or Space selects. Escape pauses.\r\nBundled music: Never Gonna Give You Up - 8 Bit Universe.\r\nMusic and SFX have independent controls in the menu.\r\n\r\nSource: https://github.com/maxatsilvergate/BN-89\r\n';
 fs.mkdirSync(output,{recursive:true});fs.writeFileSync(path.join(output,'BN-89.html'),html);
 const zip=makeZip([{name:'BN-89.html',data:Buffer.from(html)},{name:'START-HERE.txt',data:Buffer.from(readme)}]);fs.writeFileSync(path.join(output,'BN-89.zip'),zip);
 console.log(JSON.stringify({html:path.join(output,'BN-89.html'),html_bytes:Buffer.byteLength(html),zip:path.join(output,'BN-89.zip'),zip_bytes:zip.length}));
